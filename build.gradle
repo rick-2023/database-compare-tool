@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '1.13.3'
+}
+
+group 'com.dbdiff'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.12.0'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'org.apache.commons:commons-csv:1.10.0'
+}
+
+intellij {
+    version.set('2023.1')
+    type.set('IU')
+    plugins.set(['com.intellij.database', 'java'])
+    updateSinceUntilBuild.set(false)
+    sandboxDir.set("${project.buildDir}/idea-sandbox")
+}
+
+patchPluginXml {
+    sinceBuild.set('231')
+    untilBuild.set('')
+}
+
+tasks {
+    buildSearchableOptions {
+        enabled = false
+    }
+    
+    runIde {
+        autoReloadPlugins.set(true)
+        jvmArgs.add('-Xmx2048m')
+    }
+} 
